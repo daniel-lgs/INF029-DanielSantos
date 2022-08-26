@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#define tam 2
+#define tam 5
 
 struct cliente{
 	char nome[61];
