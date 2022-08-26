@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 #define tam 2
 
@@ -15,6 +16,7 @@ void limparString(char vetor[]);
 void limparBuffer(void);
 
 int main(){
+  setlocale(LC_ALL, "Portuguese");
 	printf("**************************************************\n");
 	printf("Seja bem-vindo ao programa de cadastro de clientes\n");
 	printf("**************************************************\n");
