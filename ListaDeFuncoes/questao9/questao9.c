@@ -12,7 +12,7 @@ struct cliente{
 } dados[tam];
 
 void cadastrarCliente(struct cliente x[]);
-void limparString(char vetor[]);
+void validarNome(char nome[]);
 
 int main(){
   setlocale(LC_ALL, "Portuguese");
@@ -67,4 +67,11 @@ void limparString(char vetor[]){
 			vetor[i] = '\0';
 		}
 	}
+}
+
+void validarNome(char nome[]){
+  for (int = i; nome[i] =! '\0')
+  {
+      
+  }
 }
