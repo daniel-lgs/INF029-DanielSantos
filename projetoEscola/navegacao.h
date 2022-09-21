@@ -1,0 +1,1 @@
+int escolherOpcao(int op_disponiveis);
