@@ -38,6 +38,7 @@ struct semestreLetivo
 	char semestre[tam_semestre];
 	char professor[tam_nome];
 	char registrado[tam_registrado];
+	int alunosMatriculados[tam_alunos];
 };
 
 struct semestreLetivo disciplina[tam_disciplinas];
@@ -51,6 +52,9 @@ struct pessoa atualizarPessoa(struct pessoa alunoOuProf[], int tamanho);
 struct semestreLetivo inserirDisciplina(struct semestreLetivo disciplina[], int tamanho);
 struct semestreLetivo excluirDisciplina(struct semestreLetivo disciplina[], int tamanho);
 struct semestreLetivo atualizarDisciplina(struct semestreLetivo disciplina[], int tamanho);
+
+struct semestreLetivo inserirAlunoNaDisciplina(struct semestreLetivo disciplina[], int tamanho);
+struct semestreLetivo excluirAlunoDaDisciplina(struct semestreLetivo disciplina[], int tamanho);
 
 // Relatórios
 // Relacionado ao aluno
@@ -105,6 +109,15 @@ int main()
 		strcpy(disciplina[i].semestre, "NULL");
 		strcpy(disciplina[i].professor, "NULL");
 		strcpy(disciplina[i].registrado, "n");
+	}
+
+	// Inicializa a variavel de alunos matriculados na struct semestreLetivo disciplinas
+	for (int i = 0; i < tam_disciplinas; i++)
+	{
+		for (int x = 0; x < tam_alunos; x++)
+		{
+			disciplina[i].alunosMatriculados[x] = 0;
+		}
 	}
 
 	while (continuar == true)
@@ -179,7 +192,7 @@ int main()
 			else if (opcao == 4)
 			{
 				system("clear||cls");
-				// funcao de inserir aluno em uma disciplina
+				inserirAlunoNaDisciplina(disciplina, tam_alunos);
 			}
 			else if (opcao == 5)
 			{
@@ -1036,6 +1049,119 @@ struct semestreLetivo atualizarDisciplina(struct semestreLetivo disciplina[], in
 	}
 }
 
+struct semestreLetivo inserirAlunoNaDisciplina(struct semestreLetivo disciplina[], int tamanho)
+{
+	int repetir = true, achou = false, aux;
+	char codigo[tam_codigo];
+
+	while (repetir == true)
+	{
+		printf("Digite o codigo de uma disciplina cadastrada > ");
+		fgets(codigo, tam_codigo, stdin);
+
+		if (validarEntrada(codigo, tam_codigo) == true)
+		{
+			if (validarCodigo(codigo, tam_codigo) == true)
+			{ // Verifica se o codigo existe de fato
+				for (int i = 0; i < tam_disciplinas; i++)
+				{
+					aux = 0;
+
+					for (int x = 0; disciplina[i].codigo[x] != '\0'; x++)
+					{
+						if (disciplina[i].codigo[x] == codigo[x])
+						{
+							++aux;
+						}
+					}
+
+					if (aux == 6 && disciplina[i].registrado[0] == 's')
+					{
+						aux = i;
+						i = tam_disciplinas - 1;
+						repetir = false;
+						achou = true;
+						system("clear||cls");
+						break;
+					}
+				}
+			}
+			else
+			{
+				system("clear||cls");
+				printf("Disciplina nao encontrada\n\n1 - Continuar procurando\n2 - Voltar ao menu\n");
+				if (escolherOpcao(2) == 2)
+				{
+					repetir = false;
+				}
+				system("clear||cls");
+			}
+		}
+		else
+		{
+			system("clear||cls");
+			printf("Disciplina nao encontrada\n\n1 - Continuar procurando\n2 - Voltar ao menu\n");
+			if (escolherOpcao(2) == 2)
+			{
+				repetir = false;
+			}
+			system("clear||cls");
+		}
+	}
+
+	int matricula;
+	int validar;
+
+	if (achou == true)
+	{
+		printf("------------------------------------------------------------\n");
+		printf("                TURMA DE %s | SEMESTRE %s                     \n", disciplina[aux].codigo, disciplina[aux].semestre);
+		printf("------------------------------------------------------------\n");
+		printf("Disciplina > %s\n", disciplina[aux].nome);
+		printf("Professor > %s\n", disciplina[aux].professor);
+
+		repetir = true;
+
+		while (repetir == true)
+		{
+			validar = false;
+
+			printf("\n------------------------------------------------------------\n");
+			printf("Cadastre o aluno pela matricula\n");
+			matricula = escolherOpcao(9999999);
+
+			for (int i = 0; i < tam_alunos; i++)
+			{
+				if (aluno[i].matricula == matricula && aluno[i].registrado[0] == 's')
+				{
+					validar = true;
+					for (int x = 0; x < tam_alunos; x++)
+					{
+						if (disciplina[aux].alunosMatriculados[x] == 0)
+						{
+							disciplina[aux].alunosMatriculados[x] = matricula;
+							printf("\n%s cadastrado.\n", aluno[i].nome);
+							break;
+						}
+					}
+				}
+			}
+
+			if (validar == false)
+			{
+				printf("\nAluno nao encontrado.\n");
+			}
+
+			printf("\n1 - Continuar cadastrando\n2 - Voltar ao menu");
+			if (escolherOpcao(2) == 2)
+			{	
+				repetir = false;
+				system("clear||cls");
+			}
+		}
+	}
+}
+
 // Parte2 - Relatórios
 
 // Relacionado ao aluno/professor
@@ -1062,8 +1188,7 @@ struct pessoa listarPessoas(struct pessoa alunoOuProf[], int tamanho)
 	}
 }
 
-
-//Relacionado a disciplina
+// Relacionado a disciplina
 struct semestreLetivo listarDisciplinas(struct semestreLetivo disciplina[], int tamanho)
 {
 	for (int i = 0; i < tamanho; ++i)
