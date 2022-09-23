@@ -62,6 +62,7 @@ struct pessoa listarPessoas(struct pessoa alunoOuProf[], int tamanho);
 
 // Relacionado a disciplina
 struct semestreLetivo listarDisciplinas(struct semestreLetivo disciplina[], int tamanho);
+struct semestreLetivo listarDisciplinasComAlunos(struct semestreLetivo disciplina[], int tamanho);
 
 int main()
 {
@@ -275,7 +276,7 @@ int main()
 				else if (opcao == 2)
 				{
 					system("clear||cls");
-					// Listar disciplinas (com alunos)
+					listarDisciplinasComAlunos(disciplina, tam_disciplinas);
 				}
 				else if (opcao == 3)
 				{
@@ -1126,7 +1127,7 @@ struct semestreLetivo inserirAlunoNaDisciplina(struct semestreLetivo disciplina[
 		{
 			validar = false;
 
-			printf("\n------------------------------------------------------------\n");
+			printf("------------------------------------------------------------\n");
 			printf("Cadastre o aluno pela matricula\n");
 			matricula = escolherOpcao(9999999);
 
@@ -1154,7 +1155,7 @@ struct semestreLetivo inserirAlunoNaDisciplina(struct semestreLetivo disciplina[
 
 			printf("\n1 - Continuar cadastrando\n2 - Voltar ao menu");
 			if (escolherOpcao(2) == 2)
-			{	
+			{
 				repetir = false;
 				system("clear||cls");
 			}
@@ -1206,6 +1207,45 @@ struct semestreLetivo listarDisciplinas(struct semestreLetivo disciplina[], int 
 	}
 
 	printf("1 - Voltar ao menu\n");
+	if (escolherOpcao(1) == 1)
+	{
+		system("clear||cls");
+	}
+}
+
+struct semestreLetivo listarDisciplinasComAlunos(struct semestreLetivo disciplina[], int tamanho)
+{
+	for (int i = 0; i < tamanho; ++i)
+	{
+		if (disciplina[i].registrado[0] == 's')
+		{
+			printf("------------------------------------------------------------\n");
+			printf("                TURMA DE %s | SEMESTRE %s                     \n", disciplina[i].codigo, disciplina[i].semestre);
+			printf("------------------------------------------------------------\n");
+			printf("Disciplina > %s\n", disciplina[i].nome);
+			printf("Professor > %s\n", disciplina[i].professor);
+			
+			printf("------------------------------------------------------------\n");
+			printf("                          ALUNOS                            \n");
+			printf("------------------------------------------------------------\n");
+			for (int x = 0; x < tam_alunos; x++)
+			{
+				if (disciplina[i].alunosMatriculados[x] != 0)
+				{
+					for (int y = 0; y < tam_alunos; y++)
+					{
+						if (disciplina[i].alunosMatriculados[x] == aluno[y].matricula)
+						{
+							printf("%s\n", aluno[y].nome);
+						}
+					}
+				}
+			}
+			printf("------------------------------------------------------------\n\n");
+		}
+	}
+
+	printf("\n1 - Voltar ao menu\n");
 	if (escolherOpcao(1) == 1)
 	{
 		system("clear||cls");
