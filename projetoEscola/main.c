@@ -198,76 +198,41 @@ int main()
 			else if (opcao == 5)
 			{
 				system("clear||cls");
-				// funcao de excluir aluno de uma disciplina
+				excluirAlunoDaDisciplina(disciplina, tam_alunos);
 			}
 			break;
 		case 4:
 			system("clear||cls");
-			printf("1 - Relacionado ao aluno\n2 - Relacionado ao professor\n3 - Relacionado a disciplina\n4 - Aniversariantes do mes\n5 - Buscar pessoas\n");
-			opcao = escolherOpcao(5);
+			printf("1 - Relacionado ao aluno\n2 - Relacionado ao professor\n3 - Relacionado a disciplina\n");
+			opcao = escolherOpcao(3);
 
 			if (opcao == 1) // Se relacionado ao aluno
 			{
 				system("clear||cls");
-				printf("1 - Listar alunos\n2 - Listar alunos por sexo\n3 - Listar alunos ordenados por nome\n4 - Listar alunos ordenados por data de nascimento\n5 - Listar alunos matriculados em menos de 3 disciplinas\n");
-				opcao = escolherOpcao(5);
+				printf("1 - Listar alunos\n");
+				opcao = escolherOpcao(1);
 				if (opcao == 1)
 				{
 					system("clear||cls");
 					listarPessoas(aluno, tam_alunos);
 				}
-				else if (opcao == 2)
-				{
-					system("clear||cls");
-					// Listar alunos por sexo
-				}
-				else if (opcao == 3)
-				{
-					system("clear||cls");
-					// Listar alunos ordenados por nome
-				}
-				else if (opcao == 4)
-				{
-					system("clear||cls");
-					// 4 - Listar alunos ordenados por data de nascimento
-				}
-				else if (opcao == 5)
-				{
-					system("clear||cls");
-					// 5 - Listar alunos matriculados em menos de 3 disciplinas
-				}
 			}
 			else if (opcao == 2) // Se relacionado ao professor
 			{
 				system("clear||cls");
-				printf("1 - Listar professores\n2 - Listar professores por sexo\n3 - Listar professores ordenados por nome\n4 - Listar professores ordenados por data de nascimento\n");
-				opcao = escolherOpcao(4);
+				printf("1 - Listar professores\n");
+				opcao = escolherOpcao(1);
 				if (opcao == 1)
 				{
 					system("clear||cls");
 					listarPessoas(professor, tam_professores);
 				}
-				else if (opcao == 2)
-				{
-					system("clear||cls");
-					// Listar professores por sexo
-				}
-				else if (opcao == 3)
-				{
-					system("clear||cls");
-					// Listar professores ordenados por nome
-				}
-				else if (opcao == 4)
-				{
-					system("clear||cls");
-					// 4 - Listar professores ordenados por data de nascimento
-				}
 			}
 			else if (opcao == 3) // Se relacionado a disciplina
 			{
 				system("clear||cls");
-				printf("1 - Listar disciplinas (sem os alunos)\n2 - Listar disciplinas (com alunos)\n3 - Listar disciplinas que extrapolam 40 vagas\n");
-				opcao = escolherOpcao(3);
+				printf("1 - Listar disciplinas (sem os alunos)\n2 - Listar disciplinas (com alunos)\n");
+				opcao = escolherOpcao(2);
 				if (opcao == 1)
 				{
 					system("clear||cls");
@@ -278,21 +243,6 @@ int main()
 					system("clear||cls");
 					listarDisciplinasComAlunos(disciplina, tam_disciplinas);
 				}
-				else if (opcao == 3)
-				{
-					system("clear||cls");
-					// Listar disciplinas que extrapolam 40 vagas + nome do professor
-				}
-			}
-			else if (opcao == 4) // Aniversariantes do mes
-			{
-				system("clear||cls");
-				/* code */
-			}
-			else if (opcao == 5) // Buscar pessoas
-			{
-				system("clear||cls");
-				/* code */
 			}
 			break;
 		case 5:
@@ -1163,6 +1113,119 @@ struct semestreLetivo inserirAlunoNaDisciplina(struct semestreLetivo disciplina[
 	}
 }
 
+struct semestreLetivo excluirAlunoDaDisciplina(struct semestreLetivo disciplina[], int tamanho)
+{
+	int repetir = true, achou = false, aux;
+	char codigo[tam_codigo];
+
+	while (repetir == true)
+	{
+		printf("Digite o codigo de uma disciplina cadastrada > ");
+		fgets(codigo, tam_codigo, stdin);
+
+		if (validarEntrada(codigo, tam_codigo) == true)
+		{
+			if (validarCodigo(codigo, tam_codigo) == true)
+			{ // Verifica se o codigo existe de fato
+				for (int i = 0; i < tam_disciplinas; i++)
+				{
+					aux = 0;
+
+					for (int x = 0; disciplina[i].codigo[x] != '\0'; x++)
+					{
+						if (disciplina[i].codigo[x] == codigo[x])
+						{
+							++aux;
+						}
+					}
+
+					if (aux == 6 && disciplina[i].registrado[0] == 's')
+					{
+						aux = i;
+						i = tam_disciplinas - 1;
+						repetir = false;
+						achou = true;
+						system("clear||cls");
+						break;
+					}
+				}
+			}
+			else
+			{
+				system("clear||cls");
+				printf("Disciplina nao encontrada\n\n1 - Continuar procurando\n2 - Voltar ao menu\n");
+				if (escolherOpcao(2) == 2)
+				{
+					repetir = false;
+				}
+				system("clear||cls");
+			}
+		}
+		else
+		{
+			system("clear||cls");
+			printf("Disciplina nao encontrada\n\n1 - Continuar procurando\n2 - Voltar ao menu\n");
+			if (escolherOpcao(2) == 2)
+			{
+				repetir = false;
+			}
+			system("clear||cls");
+		}
+	}
+
+	int matricula;
+	int validar;
+
+	if (achou == true)
+	{
+		printf("------------------------------------------------------------\n");
+		printf("                TURMA DE %s | SEMESTRE %s                     \n", disciplina[aux].codigo, disciplina[aux].semestre);
+		printf("------------------------------------------------------------\n");
+		printf("Disciplina > %s\n", disciplina[aux].nome);
+		printf("Professor > %s\n", disciplina[aux].professor);
+
+		repetir = true;
+
+		while (repetir == true)
+		{
+			validar = false;
+
+			printf("------------------------------------------------------------\n");
+			printf("Exclua o aluno pela matricula\n");
+			matricula = escolherOpcao(9999999);
+
+			for (int i = 0; i < tam_alunos; i++)
+			{
+				if (aluno[i].matricula == matricula && aluno[i].registrado[0] == 's')
+				{
+					validar = true;
+					for (int x = 0; x < tam_alunos; x++)
+					{
+						if (disciplina[aux].alunosMatriculados[x] != 0)
+						{
+							disciplina[aux].alunosMatriculados[x] = 0;
+							printf("\n%s excluido.\n", aluno[i].nome);
+							break;
+						}
+					}
+				}
+			}
+
+			if (validar == false)
+			{
+				printf("\nAluno nao encontrado.\n");
+			}
+
+			printf("\n1 - Continuar exluindo\n2 - Voltar ao menu");
+			if (escolherOpcao(2) == 2)
+			{
+				repetir = false;
+				system("clear||cls");
+			}
+		}
+	}
+}
+
 // Parte2 - Relatórios
 
 // Relacionado ao aluno/professor
@@ -1224,7 +1287,7 @@ struct semestreLetivo listarDisciplinasComAlunos(struct semestreLetivo disciplin
 			printf("------------------------------------------------------------\n");
 			printf("Disciplina > %s\n", disciplina[i].nome);
 			printf("Professor > %s\n", disciplina[i].professor);
-			
+
 			printf("------------------------------------------------------------\n");
 			printf("                          ALUNOS                            \n");
 			printf("------------------------------------------------------------\n");
