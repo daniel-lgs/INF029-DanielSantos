@@ -164,12 +164,27 @@ int q1(char data[])
 {
     int datavalida = 1;
 
-    // quebrar a string data em strings sDia, sMes, sAno
+    int barras = 0;
+    for(int i = 0; data[i] != '\0'; i++){
+        if (data[i] >= 48 && data[i] <= 57){
+            //
+        }
+        else{
+            if (data[i] != '/')
+            {
+                return 0;
+            }
+            else{
+                barras++;
+                if(barras >= 3)
+                {
+                    return 0;
+                }
+            }
+        }
+    }
 
-    // DataQuebrada dataQuebrada = quebraData(data);
-    // if (dataQuebrada.valido == 0) return 0;
-
-    // printf("%s\n", data);
+    //printf("%s\n", data);
 
     if (datavalida)
         return 1;
