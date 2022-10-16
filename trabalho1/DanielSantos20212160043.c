@@ -163,8 +163,9 @@ DataQuebrada quebraData(char data[])
 int q1(char data[])
 {
     int datavalida = 1;
-
+    int dia, mes, ano;
     int barras = 0;
+    
     for(int i = 0; data[i] != '\0'; i++){
         if (data[i] >= 48 && data[i] <= 57){
             //
@@ -176,13 +177,15 @@ int q1(char data[])
             }
             else{
                 barras++;
-                if(barras >= 3)
-                {
-                    return 0;
-                }
             }
         }
     }
+    if(barras != 2)
+    {
+        return 0;
+    }
+
+    return 1;
 
     //printf("%s\n", data);
 
