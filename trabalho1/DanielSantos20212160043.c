@@ -162,37 +162,126 @@ DataQuebrada quebraData(char data[])
 
 int q1(char data[])
 {
-    int datavalida = 1;
-    int dia, mes, ano;
-    int barras = 0;
-    
-    for(int i = 0; data[i] != '\0'; i++){
-        if (data[i] >= 48 && data[i] <= 57){
-            //
+    int dia = 0, mes = 0, ano = 0;
+
+    int barras = 0, granDecimal = 1, anoBissexto = 0;
+
+    // Conta as barras e transforma os números que são string em números int separados por dia, mês e ano
+    for (int i = 0; data[i] != '\0'; i++)
+    {
+        if (data[i] >= 48 && data[i] <= 57)
+        {
+            if (barras == 0)
+            {
+                if (data[i + 1] == '/')
+                {
+                    for (int j = i; j >= 0; j--)
+                    {
+                        dia += (data[j] - 48) * granDecimal;
+                        granDecimal *= 10;
+                    }
+                }
+            }
+            else if (barras == 1)
+            {
+                granDecimal = 1;
+                if (data[i + 1] == '/')
+                {
+                    for (int j = i; data[j] != '/'; j--)
+                    {
+                        mes += (data[j] - 48) * granDecimal;
+                        granDecimal *= 10;
+                    }
+                }
+            }
+            else if (barras == 2)
+            {
+                granDecimal = 1;
+                if (data[i + 1] == '\0')
+                {
+                    for (int j = i; data[j] != '/'; j--)
+                    {
+                        ano += (data[j] - 48) * granDecimal;
+                        granDecimal *= 10;
+                    }
+                }
+            }
         }
-        else{
+        else
+        {
             if (data[i] != '/')
             {
                 return 0;
             }
-            else{
+            else
+            {
                 barras++;
             }
         }
     }
-    if(barras != 2)
+
+    // Valida se tem 2 barras
+    if (barras != 2)
     {
         return 0;
     }
 
-    return 1;
-
-    //printf("%s\n", data);
-
-    if (datavalida)
-        return 1;
+    // Verifica se é um ano válido e se é bissexto
+    if (ano >= 1 && ano <= 2022)
+    {
+        if (ano % 4 == 0)
+        {
+            if (ano % 100 == 0)
+            {
+                if (ano % 400 == 0)
+                {
+                    anoBissexto = 1;
+                }
+                else
+                {
+                    anoBissexto = 0;
+                }
+            }
+            else
+            {
+                anoBissexto = 1;
+            }
+        }
+        else
+        {
+            anoBissexto = 0;
+        }
+    }
     else
+    {
         return 0;
+    }
+
+    // Verifica se é um mês válido
+    if (mes < 1 || mes > 12)
+    {
+        return 0;
+    }
+
+    // Verifica se é um dia válido
+    if (dia >= 1 && dia <= 31)
+    {
+        // Verifica se o dia está certo em relação ao mês e ao ano
+        if (mes == 4 || mes == 6 || mes == 9 || mes == 11 && dia > 30)
+        {
+            return 0;
+        }
+        if (anoBissexto == 1 && mes == 2 && dia > 29 || anoBissexto == 0 && mes == 2 && dia > 28)
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+    
+    return 1;
 }
 
 /*

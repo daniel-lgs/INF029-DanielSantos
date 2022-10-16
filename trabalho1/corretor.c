@@ -64,17 +64,29 @@ void testQ1()
 {
     char str[11];
     strcpy(str, "29/02/2015");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 0);
     strcpy(str, "29/02/2012");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 1);
     strcpy(str, "9/13/2014");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 0);
     strcpy(str, "45/4/2014");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 0);
     strcpy(str, "/9/2014");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 0);
     strcpy(str, "9/2014");
-    printf("%d\n", q1(str));
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "29/02/1988");
+    printf("%d\n", q1(str) == 1);
+    strcpy(str, "29/02/1992");
+    printf("%d\n", q1(str) == 1);
+    strcpy(str, "29/02/2000");
+    printf("%d\n", q1(str) == 1);
+    strcpy(str, "29/02/01");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "29/02/02");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "28/02/02");
+    printf("%d\n", q1(str) == 1);
 }
 
 void testQ2()
