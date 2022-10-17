@@ -267,9 +267,12 @@ int q1(char data[])
     if (dia >= 1 && dia <= 31)
     {
         // Verifica se o dia está certo em relação ao mês e ao ano
-        if (mes == 4 || mes == 6 || mes == 9 || mes == 11 && dia > 30)
+        if (mes == 4 || mes == 6 || mes == 9 || mes == 11)
         {
-            return 0;
+            if (dia > 30)
+            {
+                return 0;
+            }
         }
         if (anoBissexto == 1 && mes == 2 && dia > 29 || anoBissexto == 0 && mes == 2 && dia > 28)
         {
