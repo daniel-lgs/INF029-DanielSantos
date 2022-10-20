@@ -13,7 +13,6 @@
 //  Última atualização: 19/08/2016 - 12/12/2018
 
 // #################################################
-
 #include <stdio.h>
 #include <string.h>
 
@@ -33,8 +32,8 @@ int main()
 {
     //testSomar();
     //testFatorial();
-    testQ1();
-    //testQ2();
+    //testQ1();
+    testQ2();
     //testQ3();
     //testQ4();
     //testQ5();
@@ -140,6 +139,14 @@ void testQ2()
     printf("%d\n", dma.qtdDias == 1);
     printf("%d\n", dma.qtdMeses == 1);
     printf("%d\n", dma.qtdAnos == 0);
+
+    strcpy(datainicial, "28/02/2016");
+    strcpy(datafinal, "28/02/2017");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 1);
+    printf("%d\n", dma.qtdDias == 0);
+    printf("%d\n", dma.qtdMeses == 0);
+    printf("%d\n", dma.qtdAnos == 1);
 }
 
 void testQ3()

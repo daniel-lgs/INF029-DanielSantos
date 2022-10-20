@@ -21,8 +21,9 @@
 
 // #################################################
 
-#include <stdio.h>
 #include "DanielSantos20212160043.h" // Substitua pelo seu arquivo de header renomeado
+#include "auxiliar.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /*
@@ -227,7 +228,7 @@ int q1(char data[])
     }
 
     // Verifica se é um ano válido e se é bissexto
-    if (ano >= 1 && ano <= 2022)
+    if (ano >= 1 && ano <= 3000)
     {
         if (ano % 4 == 0)
         {
@@ -283,7 +284,7 @@ int q1(char data[])
     {
         return 0;
     }
-    
+
     return 1;
 }
 
@@ -304,29 +305,111 @@ int q1(char data[])
 
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
+    // calcule os dados e armazene na struct a seguir
+    DiasMesesAnos resultado;
+    resultado.qtdAnos = 0;
+    resultado.qtdMeses = 0;
+    resultado.qtdDias = 0;
 
-    // calcule os dados e armazene nas três variáveis a seguir
-    DiasMesesAnos dma;
+    // structs para armazenar as datas de forma quebrada em inteiros
+    DataQuebrada inicial;
+    DataQuebrada final;
 
     if (q1(datainicial) == 0)
     {
-        dma.retorno = 2;
-        return dma;
+        resultado.retorno = 2;
+        return resultado;
     }
     else if (q1(datafinal) == 0)
     {
-        dma.retorno = 3;
-        return dma;
+        resultado.retorno = 3;
+        return resultado;
     }
     else
     {
+        // quebrando as datas
+        inicial = quebraData(datainicial);
+        final = quebraData(datafinal);
+
         // verifique se a data final não é menor que a data inicial
+        if (inicial.iAno > final.iAno)
+        {
+            resultado.retorno = 4;
+            return resultado;
+        }
+        else if (inicial.iAno == final.iAno)
+        {
+            if (inicial.iMes > final.iMes)
+            {
+                resultado.retorno = 4;
+                return resultado;
+            }
+            else if (inicial.iMes == final.iMes)
+            {
+                if (inicial.iDia > final.iDia)
+                {
+                    resultado.retorno = 4;
+                    return resultado;
+                }
+            }
+        }
 
         // calcule a distancia entre as datas
+        int contDias = 0, maxDoMesPassado = 0, i = 0;
+
+        maxDoMesPassado = calcularFinalDeUmMes(inicial.iDia, inicial.iMes, inicial.iAno);
+
+        while (i == 0)
+        {
+            if (inicial.iDia == final.iDia && inicial.iMes == final.iMes && inicial.iAno == final.iAno)
+            {
+                break;
+            }
+
+            if (validarData(inicial.iDia + 1, inicial.iMes, inicial.iAno) == 1)
+            {
+                inicial.iDia++;
+                contDias++;
+            }
+            else
+            {
+                inicial.iDia = 1;
+
+                contDias++;
+
+                if (validarData(inicial.iDia, inicial.iMes + 1, inicial.iAno) == 1)
+                {
+                    inicial.iMes++;
+                }
+                else
+                {
+                    inicial.iMes = 1, inicial.iAno++;
+                }
+            }
+
+            if (contDias == maxDoMesPassado)
+            {
+                maxDoMesPassado = calcularFinalDeUmMes(inicial.iDia, inicial.iMes, inicial.iAno);
+                
+                contDias = 0;
+                resultado.qtdDias = 0;
+                resultado.qtdMeses++;
+
+                if (resultado.qtdMeses == 12)
+                {
+                    resultado.qtdMeses = 0;
+                    resultado.qtdAnos++;
+                }
+            }
+            else
+            {
+                resultado.qtdDias = contDias;
+            }
+        }
 
         // se tudo der certo
-        dma.retorno = 1;
-        return dma;
+        resultado.retorno = 1;
+        return resultado;
     }
 }
 
