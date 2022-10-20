@@ -513,7 +513,19 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
-
+    int grandeza = 1, numInvertido = 0;
+    
+    for (int i = 1; (num / i) / 10 != 0; i*=10)
+    {
+        grandeza *= 10;
+    }
+    while(grandeza != 0)
+    {
+        numInvertido += (num % 10) * grandeza;
+        grandeza /= 10;
+        num /= 10;
+    }
+    num = numInvertido;
     return num;
 }
 

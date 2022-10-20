@@ -35,8 +35,8 @@ int main()
     //testQ1();
     //testQ2();
     //testQ3();
-    testQ4();
-    //testQ5();
+    //testQ4();
+    testQ5();
     //testQ6();
 }
 
@@ -222,6 +222,10 @@ void testQ5()
     printf("%d\n", q5(78) == 87);
     printf("%d\n", q5(3) == 3);
     printf("%d\n", q5(5430) == 345);
+    printf("%d\n", q5(0) == 0);
+    printf("%d\n", q5(-1345) == -5431);
+    printf("%d\n", q5(123456) == 654321);
+    printf("%d\n", q5(1010) == 101);
 }
 
 void testQ6()
