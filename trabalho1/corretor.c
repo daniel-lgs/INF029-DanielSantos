@@ -33,9 +33,9 @@ int main()
     //testSomar();
     //testFatorial();
     //testQ1();
-    testQ2();
+    //testQ2();
     //testQ3();
-    //testQ4();
+    testQ4();
     //testQ5();
     //testQ6();
 }
@@ -158,6 +158,13 @@ void testQ3()
     printf("%d\n", q3(str, 'l', 1) == 0);
     printf("%d\n", q3(str, 'l', 0) == 1);
     printf("%d\n", q3(str, 'L', 0) == 1);
+
+    strcpy(str, "Daniel Leite Goncalves dos Santos");
+    printf("%d\n", q3(str, 'A', 0) == 3);
+    printf("%d\n", q3(str, 'd', 0) == 2);
+    printf("%d\n", q3(str, 'l', 0) == 3);
+    printf("%d\n", q3(str, 'E', 1) == 0);
+    printf("%d\n", q3(str, 'g', 1) == 0);
 }
 
 void testQ4()
@@ -182,7 +189,7 @@ void testQ4()
     {
         posicoes[i] = -1;
     }
-    strcpy(strTexto, "Olá, o mundo é muito grande. Tem muitas pessoas, e muitos problemas");
+    strcpy(strTexto, "Ola, o mundo e muito grande. Tem muitas pessoas, e muitos problemas");
     strcpy(strBusca, "mui");
     printf("%d\n", q4(strTexto, strBusca, posicoes) == 3);
     printf("%d\n", posicoes[0] == 16);
@@ -191,6 +198,22 @@ void testQ4()
     printf("%d\n", posicoes[3] == 36);
     printf("%d\n", posicoes[4] == 52);
     printf("%d\n", posicoes[5] == 54);
+
+    for (i = 0; i < 30; i++)
+    {
+        posicoes[i] = -1;
+    }
+    strcpy(strTexto, "Zezinho jogou a bola em Joaozinho, e Toninho ficou chateadinho");
+    strcpy(strBusca, "inho");
+    printf("%d\n", q4(strTexto, strBusca, posicoes) == 4);
+    printf("%d\n", posicoes[0] == 4);
+    printf("%d\n", posicoes[1] == 7);
+    printf("%d\n", posicoes[2] == 30);
+    printf("%d\n", posicoes[3] == 33);
+    printf("%d\n", posicoes[4] == 41);
+    printf("%d\n", posicoes[5] == 44);
+    printf("%d\n", posicoes[6] == 59);
+    printf("%d\n", posicoes[7] == 62);
 }
 
 void testQ5()

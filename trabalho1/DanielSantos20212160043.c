@@ -390,7 +390,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
             if (contDias == maxDoMesPassado)
             {
                 maxDoMesPassado = calcularFinalDeUmMes(inicial.iDia, inicial.iMes, inicial.iAno);
-                
+
                 contDias = 0;
                 resultado.qtdDias = 0;
                 resultado.qtdMeses++;
@@ -425,7 +425,35 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+
+    for (int i = 0; texto[i] != '\0'; i++)
+    {
+        if (isCaseSensitive != 1)
+        {
+            if (texto[i] >= 65 && texto[i] <= 90)
+            {
+                if (texto[i] == c || texto[i] + 32 == c)
+                {
+                    qtdOcorrencias++;
+                }
+            }
+            else if (texto[i] >= 97 && texto[i] <= 122)
+            {
+                if (texto[i] == c || texto[i] - 32 == c)
+                {
+                    qtdOcorrencias++;
+                }
+            }
+        }
+        else
+        {
+            if (texto[i] == c)
+            {
+                qtdOcorrencias++;
+            }
+        }
+    }
 
     return qtdOcorrencias;
 }
@@ -443,12 +471,33 @@ int q3(char *texto, char c, int isCaseSensitive)
         posicoes[1] = 16;
         Observe que o índice da posição no texto deve começar ser contado a partir de 1.
         O retorno da função, n, nesse caso seria 1;
-
  */
+
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0, aux = 1;
 
+    for (int i = 0; strTexto[i] != '\0'; i++)
+    {
+        for (int j = 0; strBusca[j] != '\0'; j++)
+        {
+            if (strTexto[i + j] == strBusca[j])
+            {
+                if (strBusca[j + 1] == '\0')
+                {
+                    qtdOcorrencias++;
+                    posicoes[aux] = i + j + 1;
+                    posicoes[aux-1] = posicoes[aux] - j;
+                    aux += 2;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    
     return qtdOcorrencias;
 }
 
