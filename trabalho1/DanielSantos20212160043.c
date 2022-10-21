@@ -514,7 +514,7 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 int q5(int num)
 {
     int grandeza = 1, numInvertido = 0;
-    
+
     for (int i = 1; (num / i) / 10 != 0; i*=10)
     {
         grandeza *= 10;
@@ -541,6 +541,25 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0, grandezaBase, grandezaBusca;
+
+    // Calcula a grandeza decimal do número base
+    grandezaBase = calcularGrandeza(numerobase) * 10;
+   
+    // Calcula a grandeza do numero busca
+    grandezaBusca = calcularGrandeza(numerobusca) * 10;
+
+    // A quantidade de algarismos vai "andar" no número base do início ao fim
+    while (numerobase >= numerobusca)
+    {   
+        if (numerobase / (grandezaBase / grandezaBusca) == numerobusca)
+        {
+            qtdOcorrencias++;
+        }
+
+        numerobase = numerobase % (grandezaBase / 10);
+
+        grandezaBase = calcularGrandeza(numerobase) * 10;
+    }
     return qtdOcorrencias;
 }

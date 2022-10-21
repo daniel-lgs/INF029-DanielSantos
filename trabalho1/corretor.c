@@ -32,12 +32,12 @@ int main()
 {
     //testSomar();
     //testFatorial();
-    //testQ1();
-    //testQ2();
-    //testQ3();
-    //testQ4();
+    testQ1();
+    testQ2();
+    testQ3();
+    testQ4();
     testQ5();
-    //testQ6();
+    testQ6();
 }
 
 void testSomar()
@@ -234,4 +234,5 @@ void testQ6()
     printf("%d\n", q6(34567368, 4576) == 0);
     printf("%d\n", q6(3539343, 3) == 4);
     printf("%d\n", q6(3539343, 39) == 1);
+    printf("%d\n", q6(980995239, 9) == 4);
 }

@@ -3,6 +3,7 @@
 
 int validarData(int dia, int mes, int ano);
 int calcularFinalDeUmMes(int dia, int mes, int ano);
+int calcularGrandeza(int num);
 
 int validarData(int dia, int mes, int ano)
 {
@@ -86,4 +87,16 @@ int calcularFinalDeUmMes(int dia, int mes, int ano)
     }
     
     return dia;
+}
+
+int calcularGrandeza(int num)
+{
+    int grandeza = 1;
+
+    for (int i = 1; (num / i) / 10 != 0; i*=10)
+    {
+        grandeza *= 10;
+    }
+    
+    return grandeza;
 }
