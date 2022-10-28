@@ -1,55 +1,92 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int playGame(char matriz[3][3]);
 void mostrarPlacar(char matriz[3][3]);
 void entradaComValidacao(char matriz[3][3], int vezDoJogador);
-void verificarVitoria(char matriz[3][3], int vezDoJogador);
+int verificarVitoria(char matriz[3][3]);
 
 int main()
 {
     char matriz[3][3];
-    int final = 0;
 
-    // Inicializa placar ------
-    for (int i = 0; i < 3; i++)
+    while (1)
     {
-        for (int j = 0; j < 3; j++)
+        // Inicializa placar ----------
+        for (int i = 0; i < 3; i++)
         {
-            matriz[i][j] = '-';
+            for (int j = 0; j < 3; j++)
+            {
+                matriz[i][j] = '-';
+            }
         }
-    }
-    // ------------------------
+        // ----------------------------
 
-    // Apresentação do jogo -----------------------
-    printf("----------------------------------\n");
-    printf("Jogo da velha | By : Daniel Santos\n");
-    printf("----------------------------------\n");
+        // Apresentação do jogo -----------------------
+        printf("----------------------------------\n");
+        printf("Jogo da velha | By : Daniel Santos\n");
+        printf("----------------------------------\n");
+        //---------------------------------------------
+
+        playGame(matriz);
+
+        // Confirmação de próximo jogo ---------------------------------------
+        printf("Tecle enter para um novo jogo ou clique no X para fechar...");
+        if (getchar() != '\n')
+        {
+            while (getchar() != '\n')
+            {
+            }
+        }
+        system("clear");
+        // -------------------------------------------------------------------
+    }
+}
+
+int playGame(char matriz[3][3])
+{
+    int resultado = 0;
 
     mostrarPlacar(matriz);
-
-    printf("Tecle enter para iniciar o jogo...");
-    if (getchar() != '\n')
+    while (1)
     {
-        while (getchar() != '\n')
+        entradaComValidacao(matriz, 1);
+        system("clear");
+        mostrarPlacar(matriz);
+        resultado = verificarVitoria(matriz);
+        if (resultado == 1)
         {
+            printf("--------------------\n");
+            printf("O jogador 1 venceu !\n");
+            printf("--------------------\n");
+            return 0;
+        }
+        else if (resultado == 2)
+        {
+            printf("-------------------\n");
+            printf("Empate, deu velha !\n");
+            printf("-------------------\n");
+            return 0;
+        }
+        entradaComValidacao(matriz, 2);
+        system("clear");
+        mostrarPlacar(matriz);
+        resultado = verificarVitoria(matriz);
+        if (resultado == 1)
+        {
+            printf("--------------------\n");
+            printf("O jogador 2 venceu !\n");
+            printf("--------------------\n");
+            return 0;
+        }
+        else if (resultado == 2)
+        {
+            printf("-------------------\n");
+            printf("Empate, deu velha !\n");
+            printf("-------------------\n");
+            return 0;
         }
     }
-    system("clear||cls");
-    // ------------------------------------------
-
-    // Funcionamento do jogo
-    while (final == 0)
-    {
-        mostrarPlacar(matriz);
-        entradaComValidacao(matriz, 1);
-        system("clear||cls");
-        mostrarPlacar(matriz);
-        entradaComValidacao(matriz, 2);
-        system("clear||cls");
-    }
-
-    getchar();
-    return 0;
 }
 
 void mostrarPlacar(char matriz[3][3])
@@ -109,7 +146,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[0][0] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[0][0] = 'X';} else {matriz[0][0] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[0][0] = 'X';
+                        }
+                        else
+                        {
+                            matriz[0][0] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -118,10 +162,17 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                     }
                 }
                 else if (entrada[1] == '2')
-                {                    
+                {
                     if (matriz[0][1] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[0][1] = 'X';} else {matriz[0][1] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[0][1] = 'X';
+                        }
+                        else
+                        {
+                            matriz[0][1] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -133,7 +184,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[0][2] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[0][2] = 'X';} else {matriz[0][2] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[0][2] = 'X';
+                        }
+                        else
+                        {
+                            matriz[0][2] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -148,7 +206,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[1][0] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[1][0] = 'X';} else {matriz[1][0] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[1][0] = 'X';
+                        }
+                        else
+                        {
+                            matriz[1][0] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -160,7 +225,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[1][1] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[1][1] = 'X';} else {matriz[1][1] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[1][1] = 'X';
+                        }
+                        else
+                        {
+                            matriz[1][1] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -172,7 +244,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[1][2] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[1][2] = 'X';} else {matriz[1][2] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[1][2] = 'X';
+                        }
+                        else
+                        {
+                            matriz[1][2] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -187,7 +266,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[2][0] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[2][0] = 'X';} else {matriz[2][0] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[2][0] = 'X';
+                        }
+                        else
+                        {
+                            matriz[2][0] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -199,7 +285,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[2][1] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[2][1] = 'X';} else {matriz[2][1] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[2][1] = 'X';
+                        }
+                        else
+                        {
+                            matriz[2][1] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -211,7 +304,14 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
                 {
                     if (matriz[2][2] == '-')
                     {
-                        if(vezDoJogador == 1){matriz[2][2] = 'X';} else {matriz[2][2] = 'O';}
+                        if (vezDoJogador == 1)
+                        {
+                            matriz[2][2] = 'X';
+                        }
+                        else
+                        {
+                            matriz[2][2] = 'O';
+                        }
                         entradaValida = 1;
                     }
                     else
@@ -224,7 +324,109 @@ void entradaComValidacao(char matriz[3][3], int vezDoJogador)
     }
 }
 
-void verificarVitoria(char matriz[3][3], int vezDoJogador)
+int verificarVitoria(char matriz[3][3])
 {
-   
+    int qtdXlinhas = 0, qtdOlinhas = 0, qtdXcolunas = 0, qtdOcolunas = 0;
+    int qtdXdiagonal = 0, qtdOdiagonal = 0;
+    int velha = 0; int aux = 0;
+
+    // Verifica uma possível vitória em todas as colunas e linhas
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (matriz[i][j] == 'X')
+            {
+                qtdXlinhas++;
+            }
+            else if (matriz[i][j] == 'O')
+            {
+                qtdOlinhas++;
+            }
+            if (matriz[j][i] == 'X')
+            {
+                qtdXcolunas++;
+            }
+            else if (matriz[j][i] == 'O')
+            {
+                qtdOcolunas++;
+            }
+        }
+        if (qtdXlinhas == 3 || qtdOlinhas == 3 || qtdXcolunas == 3 || qtdOcolunas == 3)
+        {
+            return 1;
+        }
+        else
+        {
+            qtdXlinhas = 0;
+            qtdOlinhas = 0;
+            qtdXcolunas = 0;
+            qtdOcolunas = 0;
+        }
+    }
+
+    // Verifica uma possível vitória na diagonal principal
+    for (int i = 0; i < 3; i++)
+    {
+        if (matriz[i][i] == 'X')
+        {
+            qtdXdiagonal++;
+        }
+        else if (matriz[i][i] == 'O')
+        {
+            qtdOdiagonal++;
+        }
+    }
+    if (qtdXdiagonal == 3 || qtdOdiagonal == 3)
+    {
+        return 1;
+    }
+    else
+    {
+        qtdXdiagonal = 0;
+        qtdOdiagonal = 0;
+    }
+
+    // Verifica uma possível vitória na diagonal secundária
+    aux = 2;
+    for (int i = 0; i < 3; i++)
+    {
+        if (matriz[i][aux] == 'X')
+        {
+            qtdXdiagonal++;
+        }
+        else if (matriz[i][aux] == 'O')
+        {
+            qtdOdiagonal++;
+        }
+        aux--;
+    }
+    if (qtdXdiagonal == 3 || qtdOdiagonal == 3)
+    {
+        return 1;
+    }
+    else
+    {
+        qtdXdiagonal = 0;
+        qtdOdiagonal = 0;
+        aux = 0;
+    }
+
+    // Identifica velha
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (matriz[i][j] != '-')
+            {
+                velha++;
+            }
+        }
+    }
+    if (velha == 9)
+    {
+        return 2;
+    }
+    
+    return 0;
 }
