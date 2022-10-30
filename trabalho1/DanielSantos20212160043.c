@@ -476,7 +476,15 @@ int q3(char *texto, char c, int isCaseSensitive)
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
     int qtdOcorrencias = 0, aux = 1;
+    int max = 0;
 
+    /*
+        Faz a string busca "andar" sobre a string texto,
+        verifica se ela existe ao decorrer do texto e
+        quantas vezes aparece. Armazena a primeira letra
+        da string busca em um primeiro índice do vetor
+        posicoes e a última em um segundo
+    */ 
     for (int i = 0; strTexto[i] != '\0'; i++)
     {
         for (int j = 0; strBusca[j] != '\0'; j++)
@@ -494,6 +502,34 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
             else
             {
                 break;
+            }
+        }
+    }
+
+    /*
+        Conta quantos caracteres especiais apareceram
+        antes da última letra de ocorrência da string
+        busca e dilui a quantidade nas posições inseridas
+        nos índices do vetor posicoes
+    */
+    for (int i = 0; i < 30; i++)
+    {
+        if (posicoes[i] > max)
+        {
+            max = posicoes[i];
+        }
+    }
+    
+    for (int i = max; i >= 0; i--)
+    {
+        if (strTexto[i] == -61)
+        {
+            for (int j = 0; j < 30; j++)
+            {
+                if (posicoes[j] != -1)
+                {
+                    posicoes[j] = posicoes[j] - 1;
+                }
             }
         }
     }
